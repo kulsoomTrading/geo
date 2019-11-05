@@ -10,7 +10,7 @@ function addGPSBox(){
 		//alert(latitude,longitude);
 		const box = document.createElement('a-box');
 		box.setAttribute('gps-entity-place',`latitude:${latitude}; longitude:${longitude}`);
-		box.setAttribute('scale', '10, 10');
+		box.object3D.scale.set(3,3,3)
 		box.setAttribute('color', randomHsl())
 		box.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
 		
@@ -28,8 +28,8 @@ function insertBox(){
 	const scene = document.querySelector('a-scene')
 	const box = document.createElement('a-box');
 	box.setAttribute('ar-box','true');
-	box.setAttribute('position','0 1.5 -4');
-	box.setAttribute('scale', '1 1 1');
+	box.object3D.position.set(0, 1.5, -4)
+	box.object3D.scale.set(1,1,1)
 	box.setAttribute('color', randomHsl())
 	scene.appendChild(box)
 }
