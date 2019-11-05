@@ -7,11 +7,12 @@ function addGPSBox(){
 	navigator.geolocation.getCurrentPosition((position)=>{	
 		const latitude =  position.coords.latitude
 		const longitude =  position.coords.longitude
-		alert(latitude,longitude);
+		//alert(latitude,longitude);
 		const box = document.createElement('a-box');
 		box.setAttribute('gps-entity-place',`latitude:${latitude}; longitude:${longitude}`);
-		box.setAttribute('scale', '2 2 2');
+		box.setAttribute('scale', '10, 10');
 		box.setAttribute('color', randomHsl())
+		box.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
 		
 		scene.appendChild(box)
 	}, (err)=>console.log(err), {
