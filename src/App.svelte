@@ -60,9 +60,10 @@
       var quaternion = new THREE.Quaternion();
       //this.el.object3D.getWorldPosition(position);
       let sq = this.el.object3D.getWorldQuaternion(quaternion);
-      var rotation = new THREE.Euler();
-      rotation.setFromQuaternion(quaternion);
-      console.log(sq);
+      var rotation = new THREE.Euler().setFromQuaternion(
+        quaternion,
+        eulerOrder
+      );
       console.log(rotation);
     }
   });
