@@ -52,14 +52,12 @@
 
   let worldRotation = null;
   AFRAME.registerComponent("rotation-reader-2", {
+    init: function() {},
     tick: function() {
       var quaternion = new THREE.Quaternion();
       //this.el.object3D.getWorldPosition(position);
       let sq = this.el.object3D.getWorldQuaternion(quaternion);
-      var rotation = new THREE.Euler().setFromQuaternion(
-        quaternion,
-        rotation.order
-      );
+      var rotation = new THREE.Euler().setFromQuaternion(quaternion);
       console.log(rotation);
     }
   });
