@@ -92,10 +92,15 @@
   1280; displayHeight: 960; debugUIEnabled: false;"
   cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
   vr-mode-ui="enabled: false">
-  <!-- <a-sphere
+  <!-- <-- <a-sphere
     radius="1.25"
     scale="2 2 2"
     gps-entity-place="latitude:-33.938278;longitude:151.199671" /> -->
+  -->
+  <a-text
+    value="Boris is Gay"
+    scale="10 10 10"
+    gps-entity-place="latitude:-33.938278;longitude:151.199671" />
   <a-camera gps-camera="alert:true;" rotation-reader rotation-reader-2 />
 </a-scene>
 
