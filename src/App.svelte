@@ -52,17 +52,13 @@
 
   let worldRotation = null;
   AFRAME.registerComponent("rotation-reader-2", {
-    /**
-     * We use IIFE (immediately-invoked function expression) to only allocate one
-     * vector or euler and not re-create on every tick to save memory.
-     */
     tick: function() {
       var quaternion = new THREE.Quaternion();
       //this.el.object3D.getWorldPosition(position);
       let sq = this.el.object3D.getWorldQuaternion(quaternion);
       var rotation = new THREE.Euler().setFromQuaternion(
         quaternion,
-        eulerOrder
+        rotation.order
       );
       console.log(rotation);
     }
