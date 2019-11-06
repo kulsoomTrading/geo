@@ -6,8 +6,6 @@
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        alert(offsetGPS(latitude, longitude));
-
         const sphere = document.createElement("a-sphere");
         sphere.setAttribute(
           "gps-entity-place",
@@ -44,29 +42,37 @@
   }
 
   function clearBox() {
-    const boxes = document.querySelectorAll("[ar-sphere]");
+    const boxes = document.querySelectorAll("[gps-entity-place]");
     boxes.forEach(box => {
       box.parentNode.removeChild(box);
     });
   }
 
-  function offsetGPS(lat, long) {
-    let alpha;
+  function offsetGPS() {
+    let alpha = null;
+    let initialOffset = null;
     if (window.DeviceOrientationEvent) {
-      window.addEventListener("deviceorientation", function(event) {
-        // Check for iOS property
-        if (event.webkitCompassHeading) {
-          alpha = event.webkitCompassHeading;
-        }
-        // non iOS
-        else {
-          alpha = event.alpha;
-          if (!window.chrome) {
-            // Assume Android stock
-            alpha = alpha - 270;
+      window.addEventListener(
+        "deviceorientation",
+        function(evt) {
+          if (
+            initialOffset === null &&
+            evt.absolute !== true &&
+            +evt.webkitCompassAccuracy > 0 &&
+            +evt.webkitCompassAccuracy < 50
+          ) {
+            initialOffset = evt.webkitCompassHeading || 0;
           }
-        }
-      });
+
+          alpha = evt.alpha - initialOffset;
+          if (alpha < 0) {
+            alpha += 360;
+          }
+
+          // Now use our derived world-based `alpha` instead of raw `evt.alpha` value
+        },
+        false
+      );
     }
 
     return alpha;
@@ -77,28 +83,25 @@
     // de =
     // dLat =
   }
+
+  console.log(offsetGPS());
 </script>
 
 <style>
-  #add-ar {
+  #clear-btn {
     position: fixed;
     left: 50%;
-    bottom: 15%;
+    bottom: 10%;
     transform: translate(-50%, -50%);
-    width: 90%;
+    width: 50%;
     font-size: 1rem;
     z-index: 2;
-    display: flex;
-  }
-
-  #add-ar button {
-    flex: 1;
   }
 
   #add-gps-ar {
     position: fixed;
     left: 50%;
-    bottom: 10%;
+    bottom: 15%;
     transform: translate(-50%, -50%);
     width: 50%;
     font-size: 1rem;
@@ -120,9 +123,6 @@
   <a-camera gps-camera="alert:true;" rotation-reader />
 </a-scene>
 
-<div id="add-ar">
-  <button on:click={insertBox}>Add Box</button>
-  <button on:click={clearBox}>Clear Box</button>
-</div>
-
 <button id="add-gps-ar" on:click={addGPSBox}>Add GPS Box</button>
+
+<button id="clear-btn" on:click={clearBox}>Clear Box</button>
