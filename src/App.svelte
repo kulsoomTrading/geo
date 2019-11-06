@@ -48,43 +48,24 @@
     });
   }
 
-  function offsetGPS() {
-    let alpha = null;
-    let initialOffset = null;
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener(
-        "deviceorientation",
-        function(evt) {
-          if (
-            initialOffset === null &&
-            evt.absolute !== true &&
-            +evt.webkitCompassAccuracy > 0 &&
-            +evt.webkitCompassAccuracy < 50
-          ) {
-            initialOffset = evt.webkitCompassHeading || 0;
-          }
+  function offsetGPS() {}
 
-          alpha = evt.alpha - initialOffset;
-          if (alpha < 0) {
-            alpha += 360;
-          }
+  let worldRotation = null;
+  AFRAME.registerComponent("rotation-reader-2", {
+    /**
+     * We use IIFE (immediately-invoked function expression) to only allocate one
+     * vector or euler and not re-create on every tick to save memory.
+     */
+    tick: function() {
+      //var position = new THREE.Vector3();
+      var rotation = new THREE.Euler();
 
-          // Now use our derived world-based `alpha` instead of raw `evt.alpha` value
-        },
-        false
-      );
+      //this.el.object3D.getWorldPosition(position);
+      worldRotation = this.el.object3D.getWorldRotation(rotation);
+      console.log(worldRotation);
+      // position and rotation now contain vector and euler in world space.
     }
-
-    return alpha;
-
-    // const offsetDistance = 1;
-    // if (alpha )
-    // dn =
-    // de =
-    // dLat =
-  }
-
-  console.log(offsetGPS());
+  });
 </script>
 
 <style>
@@ -120,7 +101,7 @@
     radius="1.25"
     scale="2 2 2"
     gps-entity-place="latitude:-33.938278;longitude:151.199671" /> -->
-  <a-camera gps-camera="alert:true;" rotation-reader />
+  <a-camera gps-camera="alert:true;" rotation-reader rotation-reader-2 />
 </a-scene>
 
 <button id="add-gps-ar" on:click={addGPSBox}>Add GPS Box</button>
