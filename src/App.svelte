@@ -5,14 +5,16 @@
       position => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        //alert(latitude,longitude);
+
+        alert(offsetGPS(latitude, longitude));
+
         const sphere = document.createElement("a-sphere");
         sphere.setAttribute(
           "gps-entity-place",
           `latitude:${latitude}; longitude:${longitude}`
         );
-        sphere.setAttribute("radius", "3");
-        sphere.setAttribute("scale", "2 2 2");
+        sphere.setAttribute("radius", "2");
+        sphere.setAttribute("scale", "1 1 1");
         sphere.setAttribute("color", randomHsl());
         sphere.addEventListener("loaded", () =>
           window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
@@ -46,6 +48,34 @@
     boxes.forEach(box => {
       box.parentNode.removeChild(box);
     });
+  }
+
+  function offsetGPS(lat, long) {
+    let alpha;
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", function(event) {
+        // Check for iOS property
+        if (event.webkitCompassHeading) {
+          alpha = event.webkitCompassHeading;
+        }
+        // non iOS
+        else {
+          alpha = event.alpha;
+          if (!window.chrome) {
+            // Assume Android stock
+            alpha = alpha - 270;
+          }
+        }
+      });
+    }
+
+    return alpha;
+
+    // const offsetDistance = 1;
+    // if (alpha )
+    // dn =
+    // de =
+    // dLat =
   }
 </script>
 
@@ -83,10 +113,10 @@
   1280; displayHeight: 960; debugUIEnabled: false;"
   cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
   vr-mode-ui="enabled: false">
-  <a-sphere
+  <!-- <a-sphere
     radius="1.25"
     scale="2 2 2"
-    gps-entity-place="latitude:-33.938278;longitude:151.199671" />
+    gps-entity-place="latitude:-33.938278;longitude:151.199671" /> -->
   <a-camera gps-camera="alert:true;" rotation-reader />
 </a-scene>
 
