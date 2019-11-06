@@ -96,7 +96,11 @@
     radius="1.25"
     scale="2 2 2"
     gps-entity-place="latitude:-33.938278;longitude:151.199671" /> -->
-  -->
+  -->33.796949 151.143793
+  <a-text
+    value="Boris is Gay"
+    scale="10 10 10"
+    gps-entity-place="latitude:-33.796949 ;longitude:151.143793" />
   <a-text
     value="Boris is Gay"
     scale="10 10 10"
