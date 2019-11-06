@@ -57,13 +57,13 @@
      * vector or euler and not re-create on every tick to save memory.
      */
     tick: function() {
-      //var position = new THREE.Vector3();
-      var rotation = new THREE.Euler();
-
+      var quaternion = new three.Quaternion();
       //this.el.object3D.getWorldPosition(position);
-      worldRotation = this.el.object3D.getWorldRotation(rotation);
-      console.log(worldRotation);
-      // position and rotation now contain vector and euler in world space.
+      let sq = this.el.object3D.getWorldQuaternion(quaternion);
+      var rotation = new THREE.Euler();
+      rotation.setFromQuaternion(quaternion);
+      console.log(sq);
+      console.log(rotation);
     }
   });
 </script>
