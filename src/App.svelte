@@ -42,8 +42,8 @@
             icon.setAttribute("name", place.name);
             //icon.setAttribute("value", place.name);
             //icon.setAttribute("width", "20");
-            icon.setAttribute("src", place.src);
-            icon.setAttribute("scale", "10, 10");
+            icon.setAttribute("src", "./images/Tree.glb");
+            //icon.setAttribute("scale", "10, 10");
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
             );
