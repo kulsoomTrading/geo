@@ -8,7 +8,7 @@
         location: {
           lat: 53.224697,
           lng: -4.127461,
-          src: "./images/school.svg"
+          src: "./images/tree.jpg"
         }
       },
       {
@@ -16,7 +16,7 @@
         location: {
           lat: -33.8616557,
           lng: 151.0833114,
-          src: "./images/school.svg"
+          src: "./images/tree.jpg"
         }
       }
     ];
@@ -43,7 +43,7 @@
             //icon.setAttribute("value", place.name);
             icon.setAttribute("width", "20");
             icon.setAttribute("src", place.src);
-            icon.setAttribute("scale", "20, 20");
+            icon.setAttribute("scale", "10, 10");
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
             );
@@ -183,7 +183,8 @@
 
 <a-scene
   embedded
-  arjs="sourceType: webcam; debugUIEnabled: false;"
+  arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth:
+  1280; displayHeight: 960; debugUIEnabled: false;"
   cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
   vr-mode-ui="enabled: false">
   <!-- <-- <a-sphere
