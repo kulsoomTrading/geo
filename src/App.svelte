@@ -32,15 +32,15 @@
             const latitude = place.location.lat;
             const longitude = place.location.lng;
 
-            const icon = document.createElement("a-text");
+            const icon = document.createElement("a-image");
             icon.setAttribute(
               "gps-entity-place",
               `latitude: ${latitude}; longitude: ${longitude}`
             );
             icon.setAttribute("name", place.name);
-						icon.setAttribute("value", place.name);
-						icon.setAttribute('width','20');
-            //icon.setAttribute("src", "./images/.png");
+            //icon.setAttribute("value", place.name);
+            icon.setAttribute("width", "20");
+            icon.setAttribute("src", "./images/school.svg");
             icon.setAttribute("scale", "20, 20");
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
@@ -191,6 +191,6 @@
   <a-camera gps-camera="alert:true;" rotation-reader rotation-reader-2 />
 </a-scene>
 
-<button id="add-gps-ar" on:click={addGPSBox}>Add GPS Box</button>
+<!-- <button id="add-gps-ar" on:click={addGPSBox}>Add GPS Box</button>
 
-<button id="clear-btn" on:click={clearBox}>Clear Box</button>
+<button id="clear-btn" on:click={clearBox}>Clear Box</button> -->
