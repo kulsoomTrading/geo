@@ -7,17 +7,17 @@
         name: "Test Location",
         location: {
           lat: 53.224697,
-          lng: -4.127461,
-          src: "./images/tree.jpg"
-        }
+          lng: -4.127461
+        },
+        src: "./images/tree.jpg"
       },
       {
         name: "Test Location 2",
         location: {
           lat: -33.8616557,
-          lng: 151.0833114,
-          src: "./images/tree.jpg"
-        }
+          lng: 151.0833114
+        },
+        src: "./images/tree.jpg"
       }
     ];
 
