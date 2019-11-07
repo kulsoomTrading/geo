@@ -7,14 +7,16 @@
         name: "Test Location",
         location: {
           lat: 53.224697,
-          lng: -4.127461
+          lng: -4.127461,
+          src: "./images/school.svg"
         }
       },
       {
         name: "Test Location 2",
         location: {
           lat: -33.8616557,
-          lng: 151.0833114
+          lng: 151.0833114,
+          src: "./images/school.svg"
         }
       }
     ];
@@ -40,7 +42,7 @@
             icon.setAttribute("name", place.name);
             //icon.setAttribute("value", place.name);
             icon.setAttribute("width", "20");
-            icon.setAttribute("src", "./images/school.svg");
+            icon.setAttribute("src", place.src);
             icon.setAttribute("scale", "20, 20");
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
