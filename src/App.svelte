@@ -1,4 +1,90 @@
 <script>
+  import { onMount } from "svelte";
+
+  function loadPlaces(coords) {
+    const PLACES = [
+      {
+        name: "Test Location",
+        location: {
+          lat: 53.224697,
+          lng: -4.127461
+        }
+      },
+      {
+        name: "Test Location 2",
+        location: {
+          lat: -33.8616557,
+          lng: 151.0833114
+        }
+      }
+    ];
+
+    return Promise.resolve(PLACES);
+  }
+
+  onMount(() => {
+    const scene = document.querySelector("a-scene");
+
+    return navigator.geolocation.getCurrentPosition(
+      function(position) {
+        loadPlaces(position.coords).then(places => {
+          places.forEach(place => {
+            const latitude = place.location.lat;
+            const longitude = place.location.lng;
+
+            const icon = document.createElement("a-text");
+            icon.setAttribute(
+              "gps-entity-place",
+              `latitude: ${latitude}; longitude: ${longitude}`
+            );
+            icon.setAttribute("name", place.name);
+						icon.setAttribute("value", place.name);
+						icon.setAttribute('width','20');
+            //icon.setAttribute("src", "./images/.png");
+            icon.setAttribute("scale", "20, 20");
+            icon.addEventListener("loaded", () =>
+              window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
+            );
+
+            const clickListener = function(ev) {
+              ev.stopPropagation();
+              ev.preventDefault();
+
+              const name = ev.target.getAttribute("name");
+
+              const el =
+                ev.detail.intersection && ev.detail.intersection.object.el;
+
+              if (el && el === ev.target) {
+                const label = document.createElement("span");
+                const container = document.createElement("div");
+                container.setAttribute("id", "place-label");
+                label.innerText = name;
+                container.appendChild(label);
+                document.body.appendChild(container);
+
+                setTimeout(() => {
+                  container.parentElement.removeChild(container);
+                }, 1500);
+              }
+            };
+
+            icon.addEventListener("click", clickListener);
+
+            scene.appendChild(icon);
+          });
+        });
+      },
+
+      err => console.error("Error in retrieving position", err),
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 27000
+      }
+    );
+  });
+
   function addGPSBox() {
     const scene = document.querySelector("a-scene");
     navigator.geolocation.getCurrentPosition(
@@ -48,19 +134,16 @@
     });
   }
 
-  function offsetGPS() {}
-
-  let worldRotation = null;
-  AFRAME.registerComponent("rotation-reader-2", {
-    init: function() {},
-    tick: function() {
-      var quaternion = new THREE.Quaternion();
-      //this.el.object3D.getWorldPosition(position);
-      let sq = this.el.object3D.getWorldQuaternion(quaternion);
-      var rotation = new THREE.Euler().setFromQuaternion(quaternion);
-      console.log(rotation);
-    }
-  });
+  // AFRAME.registerComponent("rotation-reader-2", {
+  //   init: function() {},
+  //   tick: function() {
+  //     var quaternion = new THREE.Quaternion();
+  //     //this.el.object3D.getWorldPosition(position);
+  //     let sq = this.el.object3D.getWorldQuaternion(quaternion);
+  //     var rotation = new THREE.Euler().setFromQuaternion(quaternion);
+  //     //console.log(rotation);
+  //   }
+  // });
 </script>
 
 <style>
@@ -83,28 +166,28 @@
     font-size: 1rem;
     z-index: 2;
   }
+
+  #place-label {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    z-index: 3;
+    background-color: white;
+    color: black;
+  }
 </style>
 
 <a-scene
   embedded
-  gps-camera-debug
-  arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth:
-  1280; displayHeight: 960; debugUIEnabled: false;"
+  arjs="sourceType: webcam; debugUIEnabled: false;"
   cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
   vr-mode-ui="enabled: false">
   <!-- <-- <a-sphere
     radius="1.25"
     scale="2 2 2"
     gps-entity-place="latitude:-33.938278;longitude:151.199671" /> -->
-  -->33.796949 151.143793
-  <a-text
-    value="Boris is Gay"
-    scale="10 10 10"
-    gps-entity-place="latitude:-33.796949 ;longitude:151.143793" />
-  <a-text
-    value="Boris is Gay"
-    scale="10 10 10"
-    gps-entity-place="latitude:-33.938278;longitude:151.199671" />
   <a-camera gps-camera="alert:true;" rotation-reader rotation-reader-2 />
 </a-scene>
 
