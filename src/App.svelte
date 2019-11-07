@@ -9,7 +9,7 @@
           lat: 53.224697,
           lng: -4.127461
         },
-        src: "./images/tree.jpg"
+        src: "./images/Tree.glb"
       },
       {
         name: "Test Location 2",
@@ -17,7 +17,7 @@
           lat: -33.8616557,
           lng: 151.0833114
         },
-        src: "./images/tree.jpg"
+        src: "./images/Tree.glb"
       }
     ];
 
@@ -34,14 +34,14 @@
             const latitude = place.location.lat;
             const longitude = place.location.lng;
 
-            const icon = document.createElement("a-image");
+            const icon = document.createElement("a-gltf");
             icon.setAttribute(
               "gps-entity-place",
               `latitude: ${latitude}; longitude: ${longitude}`
             );
             icon.setAttribute("name", place.name);
             //icon.setAttribute("value", place.name);
-            icon.setAttribute("width", "20");
+            //icon.setAttribute("width", "20");
             icon.setAttribute("src", place.src);
             icon.setAttribute("scale", "10, 10");
             icon.addEventListener("loaded", () =>
