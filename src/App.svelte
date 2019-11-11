@@ -45,6 +45,7 @@
             icon.setAttribute("gltf-model", "url(./images/Tree.glb)");
             icon.setAttribute("scale", "25 25 25");
             icon.setAttribute('rotation','-90 0 0');
+            icon.setAttribute('position', '0 -1.5 0');
 
             // const image = document.createElement('a-image');
             // image.setAttribute(
