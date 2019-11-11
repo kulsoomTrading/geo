@@ -51,7 +51,7 @@
               `latitude: ${latitude}; longitude: ${longitude}`
             );
             image.setAttribute('name',place.name);
-            image.setAttribute('src', place.src );
+            image.setAttribute('src', "./images/tree.jpg" );
             image.setAttribute('scale',"5, 5");
 
             icon.addEventListener("loaded", () =>
