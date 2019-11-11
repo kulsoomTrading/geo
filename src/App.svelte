@@ -34,7 +34,7 @@
             const latitude = place.location.lat;
             const longitude = place.location.lng;
 
-            const icon = document.createElement("a-gltf");
+            const icon = document.createElement("a-entity");
             icon.setAttribute(
               "gps-entity-place",
               `latitude: ${latitude}; longitude: ${longitude}`
@@ -42,17 +42,17 @@
             icon.setAttribute("name", place.name);
             //icon.setAttribute("value", place.name);
             //icon.setAttribute("width", "20");
-            icon.setAttribute("src", "./images/Tree.glb");
+            icon.setAttribute("gltf-model", "url(./images/Tree.glb)");
             icon.setAttribute("scale", "10 10 10");
 
-            const image = document.createElement('a-image');
-            image.setAttribute(
-              "gps-entity-place",
-              `latitude: ${latitude}; longitude: ${longitude}`
-            );
-            image.setAttribute('name',place.name);
-            image.setAttribute('src', "./images/tree.jpg" );
-            image.setAttribute('scale',"2 2 2");
+            // const image = document.createElement('a-image');
+            // image.setAttribute(
+            //   "gps-entity-place",
+            //   `latitude: ${latitude}; longitude: ${longitude}`
+            // );
+            // image.setAttribute('name',place.name);
+            // image.setAttribute('src', "./images/tree.jpg" );
+            // image.setAttribute('scale',"2 2 2");
 
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
@@ -84,7 +84,7 @@
             icon.addEventListener("click", clickListener);
 
             scene.appendChild(icon);
-            scene.appendChild(image);
+            // scene.appendChild(image);
           });
         });
       },
