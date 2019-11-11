@@ -44,6 +44,16 @@
             //icon.setAttribute("width", "20");
             icon.setAttribute("src", "./images/Tree.glb");
             icon.setAttribute("scale", "10, 10");
+
+            const image = document.createElement('a-image');
+            image.setAttribute(
+              "gps-entity-place",
+              `latitude: ${latitude}; longitude: ${longitude}`
+            );
+            image.setAttribute('name',place.name);
+            image.setAttribute('src', place.src );
+            image.setAttribute('scale',"5, 5");
+
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
             );
@@ -74,6 +84,7 @@
             icon.addEventListener("click", clickListener);
 
             scene.appendChild(icon);
+            scene.appendChild(image);
           });
         });
       },
