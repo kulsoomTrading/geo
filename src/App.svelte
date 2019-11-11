@@ -43,7 +43,8 @@
             //icon.setAttribute("value", place.name);
             //icon.setAttribute("width", "20");
             icon.setAttribute("gltf-model", "url(./images/Tree.glb)");
-            icon.setAttribute("scale", "10 10 10");
+            icon.setAttribute("scale", "25 25 25");
+            icon.setAttribute('rotation','-90 0 0');
 
             // const image = document.createElement('a-image');
             // image.setAttribute(
