@@ -43,7 +43,7 @@
             //icon.setAttribute("value", place.name);
             //icon.setAttribute("width", "20");
             icon.setAttribute("src", "./images/Tree.glb");
-            icon.setAttribute("scale", "50 50 50");
+            icon.setAttribute("scale", "10 10 10");
 
             const image = document.createElement('a-image');
             image.setAttribute(
@@ -52,7 +52,7 @@
             );
             image.setAttribute('name',place.name);
             image.setAttribute('src', "./images/tree.jpg" );
-            image.setAttribute('scale',"10 10 10");
+            image.setAttribute('scale',"2 2 2");
 
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
