@@ -52,7 +52,7 @@
             );
             image.setAttribute('name',place.name);
             image.setAttribute('src', "./images/tree.jpg" );
-            image.setAttribute('scale',"5, 5");
+            image.setAttribute('scale',"10 10 10");
 
             icon.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
