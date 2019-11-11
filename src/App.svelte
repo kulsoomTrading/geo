@@ -11,14 +11,6 @@
         },
         src: "./images/Tree.glb"
       },
-      {
-        name: "Test Location 2",
-        location: {
-          lat: -33.938315,
-          lng: 151.199660
-        },
-        src: "./images/Tree.glb"
-      }
     ];
 
     return Promise.resolve(PLACES);
@@ -34,36 +26,24 @@
             const latitude = place.location.lat;
             const longitude = place.location.lng;
 
-            const icon = document.createElement("a-entity");
-            icon.setAttribute(
+            const model = document.createElement("a-entity");
+            model.setAttribute(
               "gps-entity-place",
               `latitude: ${latitude}; longitude: ${longitude}`
             );
-            icon.setAttribute("name", place.name);
-            //icon.setAttribute("value", place.name);
-            //icon.setAttribute("width", "20");
-            icon.setAttribute("gltf-model", "url(./images/Tree.glb)");
-            icon.setAttribute("scale", "25 25 25");
-            //icon.setAttribute('rotation','-90 0 0');
-            icon.setAttribute('position', '0 -1.5 0');
+            model.setAttribute("name", place.name);
+            model.setAttribute("gltf-model", "url(./images/Tree.glb)");
+            model.setAttribute("scale", "25 25 25");
+            model.setAttribute('position', '0 -1.5 0');
 
-            // const image = document.createElement('a-image');
-            // image.setAttribute(
-            //   "gps-entity-place",
-            //   `latitude: ${latitude}; longitude: ${longitude}`
-            // );
-            // image.setAttribute('name',place.name);
-            // image.setAttribute('src', "./images/tree.jpg" );
-            // image.setAttribute('scale',"2 2 2");
-
-            icon.addEventListener("loaded", () =>
+            model.addEventListener("loaded", () =>
               window.dispatchEvent(new CustomEvent("gps-entity-place-loaded"))
             );
 
             const clickListener = function(ev) {
               ev.stopPropagation();
               ev.preventDefault();
-
+              console.log('clicked')
               const name = ev.target.getAttribute("name");
 
               const el =
@@ -83,10 +63,10 @@
               }
             };
 
-            icon.addEventListener("click", clickListener);
+            model.addEventListener("click", clickListener);
 
-            scene.appendChild(icon);
-            // scene.appendChild(image);
+            scene.appendChild(model);
+
           });
         });
       },
@@ -130,58 +110,9 @@
     );
   }
 
-  const randomHsl = () => `hsla(${Math.random() * 360}, 100%, 50%, 1)`;
-
-  function insertBox() {
-    const scene = document.querySelector("a-scene");
-    let sphere = document.createElement("a-sphere");
-    sphere.setAttribute("ar-sphere", "true");
-    sphere.object3D.position.set(0, 1.5, -4);
-    sphere.setAttribute("radius", "2");
-    sphere.setAttribute("color", randomHsl());
-    scene.appendChild(sphere);
-  }
-
-  function clearBox() {
-    const boxes = document.querySelectorAll("[gps-entity-place]");
-    boxes.forEach(box => {
-      box.parentNode.removeChild(box);
-    });
-  }
-
-  // AFRAME.registerComponent("rotation-reader-2", {
-  //   init: function() {},
-  //   tick: function() {
-  //     var quaternion = new THREE.Quaternion();
-  //     //this.el.object3D.getWorldPosition(position);
-  //     let sq = this.el.object3D.getWorldQuaternion(quaternion);
-  //     var rotation = new THREE.Euler().setFromQuaternion(quaternion);
-  //     //console.log(rotation);
-  //   }
-  // });
 </script>
 
 <style>
-  #clear-btn {
-    position: fixed;
-    left: 50%;
-    bottom: 10%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    font-size: 1rem;
-    z-index: 2;
-  }
-
-  #add-gps-ar {
-    position: fixed;
-    left: 50%;
-    bottom: 15%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    font-size: 1rem;
-    z-index: 2;
-  }
-
   #place-label {
     position: fixed;
     left: 50%;
@@ -200,13 +131,5 @@
   1280; displayHeight: 960; debugUIEnabled: false;"
   cursor="rayOrigin: mouse; fuse: true; fuseTimeout: 0;"
   vr-mode-ui="enabled: false">
-  <!-- <-- <a-sphere
-    radius="1.25"
-    scale="2 2 2"
-    gps-entity-place="latitude:-33.938278;longitude:151.199671" /> -->
   <a-camera gps-camera="alert:true;" rotation-reader rotation-reader-2 />
 </a-scene>
-
-<!-- <button id="add-gps-ar" on:click={addGPSBox}>Add GPS Box</button>
-
-<button id="clear-btn" on:click={clearBox}>Clear Box</button> -->
